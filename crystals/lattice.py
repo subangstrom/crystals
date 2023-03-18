@@ -110,12 +110,14 @@ class Lattice:
     
 
     @property
-    def direct_tensor(self):      
-        array = np.array([[eval(f'np.vdot(self.a{i}, self.a{j})', {'self':self, 'np':np}) 
-                           for i in range(1,4)] 
-                           for j in range(1,4)]
-            )
-        return array * (array > 1e-5)
+    def direct_tensor(self):  
+        lattice_vectors = self.lattice_vectors
+
+        tensor = np.array([[ np.vdot(ai, aj)
+                           for ai in lattice_vectors] 
+                           for aj in lattice_vectors])
+
+        return tensor * (tensor > 1e-10)
         
     @property
     def recip_tensor(self):      
@@ -124,7 +126,7 @@ class Lattice:
         array = np.linalg.inv(direct)
 
 
-        return array * (array > 1e-5)
+        return array * (array > 1e-10)
 
     @property
     def lattice_parameters(self) -> Tuple[float, float, float, float, float, float]:
@@ -193,11 +195,6 @@ class Lattice:
         lv = np.abs(np.array(self.lattice_vectors))
         return tuple(lv.sum(axis=0))
     
-    def gLength(self, ghkl) -> float:
-        gsq = np.vdot(ghkl, np.matmul(self.recip_tensor, ghkl))
-
-        return np.sqrt(gsq) 
-
     def scattering_vector(self, reflection: ArrayLike) -> np.ndarray:
         """
         Scattering vector from Miller indices.

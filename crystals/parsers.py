@@ -1252,12 +1252,3 @@ class POSCARParser(AbstractStructureParser):
         lv : list of ndarrays, shape (3,)
         """
         return self._lattice_vectors
-
-def main():
-    a = CIFParser('fcc_si.cif')
-    # print(a.atoms())
-
-    for atom in a.atoms():
-        print(atom.meanSquareDisplacement)
-if __name__ == '__main__':
-    main()

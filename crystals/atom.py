@@ -159,7 +159,7 @@ class Atom(Element):
         coords: ArrayLike,
         lattice: Optional[Union[Lattice, ArrayLike]] = None,
         displacement: ArrayLike = None,
-        meanSquareDisplacement: float = 0.0,
+        rms_displacement: float = 0.0,
         magmom: Optional[float] = None,
         occupancy: float = 1.0,
         tag: Optional[Any] = None,
@@ -170,7 +170,7 @@ class Atom(Element):
 
         self.coords_fractional = np.asfarray(coords)
         self.lattice = lattice or Lattice(np.eye(3))
-        self.meanSquareDisplacement = meanSquareDisplacement
+        self.rms_displacement = rms_displacement
         self.displacement = np.asfarray(
             displacement if displacement is not None else (0, 0, 0)
         )
