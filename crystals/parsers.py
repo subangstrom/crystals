@@ -747,7 +747,7 @@ class CIFParser(AbstractStructureParser):
             if cartesian:
                 coords = transform(cart_trans_matrix, coords)
                 coords[:] = frac_coords(coords, self.lattice_vectors())
-            atoms.append(Atom(element=e, coords=np.mod(coords, 1), occupancy=occ, meanSquareDisplacement=bs))
+            atoms.append(Atom(element=e, coords=np.mod(coords, 1), occupancy=occ, rms_displacement=bs))
 
         return atoms
 
